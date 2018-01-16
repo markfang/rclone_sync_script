@@ -21,7 +21,7 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
 done < "$1"
 
 # copy "local to cloud" for folder "Upload" then rm local
-CMD="${RCLONE_BIN} sync ${LOCAL}Upload ${REMOTE}Upload"
+CMD="${RCLONE_BIN} copy ${LOCAL}Upload ${REMOTE}Upload"
 echo $CMD
 echo "syncing: Upload"
 eval $CMD
