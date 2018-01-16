@@ -1,0 +1,27 @@
+#!/bin/sh
+RCLONE_BIN="/mnt/HD/HD_a2/rclone-v1.39-linux-arm/rclone"
+REMOTE="Gdrive:"
+LOCAL="/mnt/HD/HD_a2/Gdrive/"
+
+# check rclone binary running?
+TMP=`ps aux | grep rclone`
+GREP_RESULT=$?
+if [ $GREP_RESULT -eq 0 ]
+then
+    echo "rclone running, exit"
+    exit 1
+fi
+
+# sync "cloud to local" for each folders
+while IFS='' read -r line || [[ -n "$line" ]]; do
+    CMD="${RCLONE_BIN} sync ${REMOTE}${line} ${LOCAL}${line}"
+    echo $CMD
+    echo "syncing: $line"
+    eval $CMD
+done < "$1"
+
+# copy "local to cloud" for folder "Upload" then rm local
+CMD="${RCLONE_BIN} sync ${LOCAL}Upload ${REMOTE}Upload"
+echo $CMD
+echo "syncing: Upload"
+eval $CMD
