@@ -25,4 +25,4 @@ CMD="${RCLONE_BIN} sync ${LOCAL}Upload ${REMOTE}Upload"
 echo $CMD
 echo "syncing: Upload"
 eval $CMD
-eval "rm ${LOCAL}Upload/*"
+eval "rm ${LOCAL}Upload/* -rf"
